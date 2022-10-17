@@ -1,6 +1,11 @@
-﻿using System.Text;
+﻿using System.Net.Sockets;
+using System.Text;
 
-string Dir = Environment.GetCommandLineArgs()[1];
+args = new string[1];
+args[0] = "D:\\GItSource\\FindWord";
+
+//string Dir = Environment.GetCommandLineArgs()[1];
+string Dir = args[0];
 DirectoryInfo directory = new DirectoryInfo(Dir);
 
 FileInfo[] files = directory.GetFiles();
