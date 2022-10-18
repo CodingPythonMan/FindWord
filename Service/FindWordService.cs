@@ -17,17 +17,7 @@ namespace FindWord.Service
             List<string> GoalWords = new();
             List<string> ExceptWords = new();
 
-            int exceptPos = 0;
-            // Except 위치 j
-            for (int i = 1; i < args.Length; i++)
-            {
-                if (args[i].Equals("-except"))
-                {
-                    exceptPos = i;
-                    break;
-                }
-                GoalWords.Add(args[i]);
-            }
+            ClassifyWords(GoalWords, ExceptWords, args);
 
             for (int i = 0; i < files.Length; i++)
             {
@@ -68,6 +58,21 @@ namespace FindWord.Service
             DirectoryInfo directory = new DirectoryInfo(Dir);
 
             return directory.GetFiles();
+        }
+
+        public void ClassifyWords(List<string> GoalWords, List<string> ExceptWords, string[] args)
+        {
+            int exceptPos = 0;
+            // Except 위치 j
+            for (int i = 1; i < args.Length; i++)
+            {
+                if (args[i].Equals("-except"))
+                {
+                    exceptPos = i;
+                    break;
+                }
+                GoalWords.Add(args[i]);
+            }
         }
     }
 }

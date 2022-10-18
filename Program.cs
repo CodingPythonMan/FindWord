@@ -11,7 +11,6 @@ args[4] = "dropping";
 if (args.Length > 1)
 {
     FindWordService findWordService = new();
-    ClassifyService classifyService = new();
 
     findWordService.FindWord(args);
 }
