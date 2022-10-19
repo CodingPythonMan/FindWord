@@ -14,8 +14,8 @@ namespace FindWord.Service
             FileInfo[] files = GetFiles(args[0]);
 
             int[] result = new int[files.Length];
-            List<string> GoalWords = new();
-            List<string> ExceptWords = new();
+            HashSet<string> GoalWords = new();
+            HashSet<string> ExceptWords = new();
 
             ClassifyWords(GoalWords, ExceptWords, args);
 
@@ -27,7 +27,14 @@ namespace FindWord.Service
                 {
                     string Line = line.ToUpper();
 
-                    int wordPos = Line.IndexOf("DROP", 0);
+                    int[] GoalPos = new int[GoalWords.Count];
+                    int[] ExceptPos = new int[ExceptWords.Count];
+
+                    for(int j=0; j<GoalWords.Count; j++)
+                    {
+                        GoalPos[j] = Line.IndexOf(GoalWords.ElementAt(j));
+                    }
+
                     int droppingPos = Line.IndexOf("DROPPING", 0);
 
                     lineCount++;
@@ -60,7 +67,7 @@ namespace FindWord.Service
             return directory.GetFiles();
         }
 
-        public void ClassifyWords(List<string> GoalWords, List<string> ExceptWords, string[] args)
+        public void ClassifyWords(HashSet<string> GoalWords, HashSet<string> ExceptWords, string[] args)
         {
             int exceptPos = 0;
             // Except 위치 j
@@ -72,6 +79,10 @@ namespace FindWord.Service
                     break;
                 }
                 GoalWords.Add(args[i]);
+            }
+            for (int i = exceptPos; i < args.Length; i++)
+            {
+                ExceptWords.Add(args[i]);
             }
         }
     }
